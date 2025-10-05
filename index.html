@@ -9,47 +9,5 @@
 </head>
 <body>
     <spline-viewer class="background" url="https://prod.spline.design/yoY203X5JBtBeGDJ/scene.splinecode"></spline-viewer>
-
-      <script>
-    const viewer = document.getElementById("scene");
-    const startBtn = document.getElementById("startBtn");
-
-    // Esperar a que la escena esté lista
-    viewer.addEventListener("load", () => {
-      const camera = viewer.scene.activeCamera;
-
-      function enableMotion() {
-        // Para iOS se debe pedir permiso
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-          DeviceOrientationEvent.requestPermission()
-            .then(permissionState => {
-              if (permissionState === "granted") {
-                window.addEventListener("deviceorientation", handleMotion);
-                startBtn.style.display = "none"; // ocultar botón
-              }
-            })
-            .catch(console.error);
-        } else {
-          // En Android funciona directo
-          window.addEventListener("deviceorientation", handleMotion);
-          startBtn.style.display = "none";
-        }
-      }
-
-      function handleMotion(event) {
-        let rotX = event.beta;   // inclinación adelante/atrás
-        let rotY = event.gamma;  // inclinación izquierda/derecha
-
-        // Normalizar valores (ajustá la sensibilidad a gusto)
-        let x = rotX / 90;
-        let y = rotY / 90;
-
-        camera.rotation.x = x * 0.5;
-        camera.rotation.y = y * 0.5;
-      }
-
-      startBtn.addEventListener("click", enableMotion);
-    });
-  </script>
 </body>
 </html>
